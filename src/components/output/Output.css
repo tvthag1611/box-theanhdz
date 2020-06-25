@@ -37,6 +37,11 @@
         width: 100%;
         margin-bottom: 10px;
     }
+
+    .output-right {
+        width: 100%;
+    }
+
     .output-style {
         width: 95%;
     }
@@ -44,6 +49,13 @@
 
 .output-left {
     margin-right: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.output-right {
     border-radius: 5px;
     display: flex;
     flex-direction: column;

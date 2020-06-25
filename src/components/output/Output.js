@@ -34,7 +34,9 @@ export default function Output() {
                     <div className="output-left-document">
                     </div>
                 </div>
-                <div className="output-left"></div>
+                <div className="output-right">
+                    Output right
+                </div>
             </div>
         </div>
     )

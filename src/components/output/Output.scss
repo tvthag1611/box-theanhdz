@@ -7,7 +7,7 @@ $wd2: 300px * 595px / 842px;
     margin-bottom: 10px;
 }
 
-.output-left {
+.output-left, .output-right {
     border: 1px solid #79CBCA;
     flex: 1;
     height: 700px;
@@ -19,7 +19,7 @@ $wd2: 300px * 595px / 842px;
         height: 410px;
     }
 
-    .output-left {
+    .output-left, .output-right {
         height: 500px;
     }
 }
@@ -30,7 +30,7 @@ $wd2: 300px * 595px / 842px;
         height: 210px;
     }
 
-    .output-left {
+    .output-left, .output-right {
         height: 300px;
     }
 }
