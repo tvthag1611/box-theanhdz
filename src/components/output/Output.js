@@ -6,6 +6,33 @@ import Switch from "react-switch";
 export default function Output() {
     const [checked, setChecked] = useState(true);
     const [isTextlines, setIsTextlines] = useState(true);
+    const [state, setState] = useState({
+        output: {
+            pages: [
+                {
+                    textlines: [],
+                    rotation_angle: 0.15099197490648789,
+                    height: 2530,
+                    width: 1809,
+                    page_num: 2,
+                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg"
+                },
+                {
+                    textlines: [],
+                    rotation_angle: 0.6729477313724724,
+                    height: 2547,
+                    width: 1832,
+                    page_num: 1,
+                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/0.jpg"
+                }
+            ],
+            images: [],
+            kv: []
+        },
+        time: 15.47,
+        api_version: "0.1",
+        mlchain_version: "0.0.9i0"
+    });
 
     const handleChange = checked => {
         setChecked(checked);
