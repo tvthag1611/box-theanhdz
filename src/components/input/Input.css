@@ -49,8 +49,15 @@
 .btn-upload {
     background-color: #79CBCA;
     width: 15vw;
+    overflow: hidden;
 }
 
 .btn-group {
     margin-top: 30px;
+}
+
+@media screen and (max-width: 992px) {
+    .input-style {
+        width: 95%;
+    }
 }

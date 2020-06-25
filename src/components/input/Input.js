@@ -14,7 +14,7 @@ export default function Input() {
         setSelectedOption(selectedOption);
     };
     return (
-        <div className="container input-style">
+        <div className="container-fluid input-style">
             <h3>INPUT</h3>
             <div className="btn-group" role="group">
                 <button type="button" className="btn disabled scenario">Scenario</button>

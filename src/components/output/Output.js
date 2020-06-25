@@ -11,7 +11,7 @@ export default function Output() {
     }
 
     return (
-        <div className="container output-style">
+        <div className="container-fluid output-style">
             <h3>OUTPUT</h3>
             <div className="content-output">
                 <div className="output-left">

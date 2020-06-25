@@ -1,4 +1,6 @@
 $wd: 700px * 595px / 842px;
+$wd1: 500px * 595px / 842px;
+$wd2: 300px * 595px / 842px;
 .output-left-document {
     width: $wd;
     height: 610px;
@@ -9,4 +11,26 @@ $wd: 700px * 595px / 842px;
     border: 1px solid #79CBCA;
     flex: 1;
     height: 700px;
+}
+
+@media screen and (max-width: 600px) {
+    .output-left-document {
+        width: $wd1;
+        height: 410px;
+    }
+
+    .output-left {
+        height: 500px;
+    }
+}
+
+@media screen and (max-width: 435px) {
+    .output-left-document {
+        width: $wd2;
+        height: 210px;
+    }
+
+    .output-left {
+        height: 300px;
+    }
 }
