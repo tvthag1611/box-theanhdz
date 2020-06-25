@@ -1,26 +1,82 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Output.css'
 import './Output.scss';
 import Switch from "react-switch";
 import JSONTreeComponent from "react-json-tree"
+import { Stage, Layer, Rect } from 'react-konva';
 
 export default function Output() {
     const [checked, setChecked] = useState(true);
     const [isTextlines, setIsTextlines] = useState(true);
+    const [indexPage, setIndexPage] = useState(1);
     const [state, setState] = useState({
         output: {
             pages: [
                 {
                     textlines: [
                         {
+                            polys: [
+                                [
+                                    738,
+                                    85
+                                ],
+                                [
+                                    920,
+                                    85
+                                ],
+                                [
+                                    921,
+                                    121
+                                ],
+                                [
+                                    737,
+                                    123
+                                ]
+                            ],
                             "text": "HỌC VẤN",
                             "confidence": 0.9711343947963079
                         },
                         {
+                            polys: [
+                                [
+                                    1634,
+                                    204
+                                ],
+                                [
+                                    1790,
+                                    206
+                                ],
+                                [
+                                    1790,
+                                    232
+                                ],
+                                [
+                                    1634,
+                                    230
+                                ]
+                            ],
                             "text": "2014 - 2019",
                             "confidence": 0.999746721478729
                         },
                         {
+                            polys: [
+                                [
+                                    608,
+                                    188
+                                ],
+                                [
+                                    1242,
+                                    195
+                                ],
+                                [
+                                    1242,
+                                    225
+                                ],
+                                [
+                                    608,
+                                    218
+                                ]
+                            ],    
                             "text": "HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG",
                             "confidence": 0.985105110407201
                         }
@@ -32,7 +88,52 @@ export default function Output() {
                     url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg"
                 },
                 {
-                    textlines: [],
+                    textlines: [
+                        {
+                            polys: [
+                                [
+                                    591,
+                                    891
+                                ],
+                                [
+                                    1373,
+                                    893
+                                ],
+                                [
+                                    1373,
+                                    921
+                                ],
+                                [
+                                    591,
+                                    919
+                                ]
+                            ],
+                            text: "vậnchuyển hàng như grap. Đều được khách hàng đánh giá cao",
+                            confidence: 0.9824769804198147
+                        },
+                        {
+                            polys: [
+                                [
+                                    1623,
+                                    2479
+                                ],
+                                [
+                                    1761,
+                                    2482
+                                ],
+                                [
+                                    1759,
+                                    2504
+                                ],
+                                [
+                                    1623,
+                                    2499
+                                ]
+                            ],
+                            text: "O topcv.vn",
+                            confidence: 0.9643418775941204
+                        }    
+                    ],
                     rotation_angle: 0.6729477313724724,
                     height: 2547,
                     width: 1832,
@@ -88,7 +189,7 @@ export default function Output() {
     }
 
     const renderTable = () =>{
-        return state.output.pages[0].textlines.map((textline, index) => {
+        return state.output.pages[indexPage-1].textlines.map((textline, index) => {
             const {text, confidence} = textline;
             return(
                 <tr key={index}>
@@ -116,9 +217,6 @@ export default function Output() {
                     </tbody>
             </table>
             )
-        
-            
-        
     }
 
     return (
@@ -129,10 +227,20 @@ export default function Output() {
                     <div className="output-left-top">
                         <i className="fa fa-chevron-left" aria-hidden="true"
                             data-toggle="tooltip" data-placement="bottom" title="Previous Page"
+                            onClick={() => {
+                                if (indexPage > 1) {
+                                    setIndexPage(indexPage-1);
+                                }
+                            }}
                         ></i>
-                        <p>Page 1/1</p>
+                        <p>Page {indexPage}/{state.output.pages.length}</p>
                         <i className="fa fa-chevron-right" aria-hidden="true"
                             data-toggle="tooltip" data-placement="bottom" title="Next Page"
+                            onClick={() => {
+                                if (indexPage < state.output.pages.length) {
+                                    setIndexPage(indexPage+1);
+                                }
+                            }}
                         ></i>
                         <Switch onChange={handleChange} checked={checked}/>
                         <i className="fa fa-plus" aria-hidden="true"
@@ -142,8 +250,27 @@ export default function Output() {
                             data-toggle="tooltip" data-placement="bottom" title="Zoom Out"
                         ></i>
                     </div>
-                    <div className="output-left-document container">
-                    </div>
+                    <Stage height={610} width={700 * 595 / 842}>
+                        <Layer>
+                            {
+                                state.output.pages[indexPage-1].textlines.map(textline => {
+                                    let x = textline.polys[0][0]*(700 * 595 / 842)/state.output.pages[indexPage-1].width;
+                                    let y = textline.polys[0][1]*610/state.output.pages[indexPage-1].height;
+                                    let width = textline.polys[1][0] - textline.polys[0][0];
+                                    let height = textline.polys[3][1] - textline.polys[0][1];
+                                    return (
+                                        <Rect
+                                            x={x}
+                                            y={y}
+                                            width={width}
+                                            height={height}
+                                            stroke="red"
+                                        />
+                                    )
+                                })
+                            }
+                        </Layer>
+                    </Stage>
                 </div>
 
                 <div className="output-right">
