@@ -105,4 +105,11 @@ $wd2: 300px * 595px / 842px;
             width: 4rem;
         }
     }
+    .json-content{
+        overflow-y: scroll;
+        .json-data{
+            width: 100%;
+        }
+    }
+    
 }
