@@ -1,6 +1,7 @@
 $wd: 700px * 595px / 842px;
 $wd1: 500px * 595px / 842px;
 $wd2: 300px * 595px / 842px;
+$green:  rgb(26, 194, 26);
 .output-left-document {
     width: $wd;
     height: 610px;
@@ -32,5 +33,40 @@ $wd2: 300px * 595px / 842px;
 
     .output-left, .output-right {
         height: 300px;
+    }
+}
+
+.output-right{
+    .title{
+        width: 100%;
+        display: flex;
+        color: grey;
+        padding: 1rem;
+        .texlines{
+            margin-right: 0.5rem;
+            &:hover{
+                color: $green;
+            }
+        }
+    }
+    .table{
+        width: 100%;
+        tr{
+            border: solid 1px #eeeeee;
+        }
+        .header{
+            background-color: #dbf3ff;
+            .text{
+                width: 75%;
+            }
+        }
+        
+        .cover-box{
+            background-color: #a3f4a3;
+            color: #026e02;
+            border: solid 1px #026e02;
+            text-align: center;
+            width: 4rem;
+        }
     }
 }

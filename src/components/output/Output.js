@@ -34,9 +34,38 @@ export default function Output() {
                     <div className="output-left-document">
                     </div>
                 </div>
+
                 <div className="output-right">
-                    Output right
+                    <div className="title">
+                        <div className="texlines">Raw Textlines</div>
+                        <div className="json">Raw JSON Results</div>
+                    </div>
+                    <table className="table">
+                        <tr className="header">
+                            <th className="text">Text</th>
+                            <th className="confidence">Confidence</th>
+                        </tr>
+                        <tr>
+                            <td>adgasfhdsfaljgioshgfihsighushng</td>
+                            <td>
+                                <div className="cover-box">0967</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>adgasfhdsfaljgioshgfihsighushng</td>
+                            <td>
+                                <div className="cover-box">0967</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>adgasfhdsfaljgioshgfihsighushng</td>
+                            <td>
+                                <div className="cover-box">0967</div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+
             </div>
         </div>
     )
