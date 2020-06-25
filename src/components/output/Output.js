@@ -253,6 +253,7 @@ export default function Output() {
                     <Stage height={610} width={700 * 595 / 842}>
                         <Layer>
                             {
+                                checked ?
                                 state.output.pages[indexPage-1].textlines.map(textline => {
                                     let x = textline.polys[0][0]*(700 * 595 / 842)/state.output.pages[indexPage-1].width;
                                     let y = textline.polys[0][1]*610/state.output.pages[indexPage-1].height;
@@ -267,7 +268,7 @@ export default function Output() {
                                             stroke="red"
                                         />
                                     )
-                                })
+                                }) : null
                             }
                         </Layer>
                     </Stage>
