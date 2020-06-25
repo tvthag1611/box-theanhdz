@@ -1,6 +1,6 @@
 .input-style {
     width: 80%;
-    height: 300px;
+    height: auto;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -15,27 +15,40 @@
 }
 
 .btn-grad {
-    background-color: #79CBCA;
+    background-color: #61cf70;
     width: 200px;
-    margin-top: 30px;
+    margin: 30px 0px;
+    font-weight: bold;
+    color: white;
 }
 .btn-grad:hover {
     transition: 0.5s ease-in-out;
-    background-color: orange;
-    margin-top: 28px;
+    background-color: #6f42c1;
 }
 
 .selected-custom {
-    width: 50vw;
-    border-left: 0px solid #ccc;
+    width: 100%;
+}
+
+.btn-group {
+    border: 1px solid #bce0fd;
+    padding: 5px;
+    align-items: center;
+    width: 80%;
+}
+
+.btn-group:hover {
+    border: 1px solid #63d481;
 }
 
 .scenario {
     width: 100px;
     background-color: white;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #bce0fd;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .file-input {
@@ -43,13 +56,19 @@
 }
 
 .text-input {
-    width: 35vw;
+    width: 100%;
+    border: none;
+}
+
+.text-input:focus {
+    outline: none !important;
 }
 
 .btn-upload {
-    background-color: #79CBCA;
-    width: 15vw;
+    background-color: #61cf70;
+    width: 150px;
     overflow: hidden;
+    color: white;
 }
 
 .btn-group {

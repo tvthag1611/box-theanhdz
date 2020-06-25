@@ -1,17 +1,34 @@
 $wd: 700px * 595px / 842px;
 $wd1: 500px * 595px / 842px;
 $wd2: 300px * 595px / 842px;
-$green:  rgb(26, 194, 26);
 .output-left-document {
     width: $wd;
     height: 610px;
     margin-bottom: 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.output-left {
+    background-color: #f1f9fe;
 }
 
 .output-left, .output-right {
-    border: 1px solid #79CBCA;
-    flex: 1;
+    border: 1px solid #bce0fd;
+    width: 50%;
     height: 700px;
+}
+
+@media screen and (min-width: 992px) {
+    .output-left-document {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .output-left, .output-right {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -22,6 +39,7 @@ $green:  rgb(26, 194, 26);
 
     .output-left, .output-right {
         height: 500px;
+        width: 95%;
     }
 }
 
@@ -33,6 +51,7 @@ $green:  rgb(26, 194, 26);
 
     .output-left, .output-right {
         height: 300px;
+        width: 95%;
     }
 }
 
@@ -41,30 +60,47 @@ $green:  rgb(26, 194, 26);
         width: 100%;
         display: flex;
         color: grey;
-        padding: 1rem;
-        .texlines{
-            margin-right: 0.5rem;
+        height: 50px;
+        justify-content: center;
+        line-height: 50px;
+        .textlines{
+            margin-right: 2rem;
             &:hover{
-                color: $green;
+                color: #63d481;
+                cursor: pointer;
             }
+        }
+        .json {
+            &:hover{
+                color: #63d481;
+                cursor: pointer;
+            }
+        }
+        .title-active {
+            color: #63d481;
+            font-weight: bold;
+            border-bottom: 2px solid #63d481;
         }
     }
     .table{
         width: 100%;
         tr{
             border: solid 1px #eeeeee;
+            th {
+                color: #6084a4;
+            }
         }
         .header{
-            background-color: #dbf3ff;
+            background-color: #f1f9fe;
             .text{
                 width: 75%;
             }
         }
         
         .cover-box{
-            background-color: #a3f4a3;
-            color: #026e02;
-            border: solid 1px #026e02;
+            background-color: #f5fded;
+            color: #64ca31;
+            border: solid 1px #b7eb8f;
             text-align: center;
             width: 4rem;
         }

@@ -4,10 +4,51 @@ import './Output.scss';
 import Switch from "react-switch";
 
 export default function Output() {
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(true);
+    const [isTextlines, setIsTextlines] = useState(true);
 
     const handleChange = checked => {
         setChecked(checked);
+    }
+
+    const RowJson = () => {
+        return (
+            <div className="json-content">
+                <button type="button" name="" id="" className="btn btn-json">
+                    <i className="fa fa-download" aria-hidden="true"></i>
+                    Download JSON
+                </button>
+            </div>
+        );
+    }
+
+    const RowTextlines = () => {
+        return (
+            <table className="table">
+                <tr className="header">
+                    <th className="text">Text</th>
+                    <th className="confidence">Confidence</th>
+                </tr>
+                <tr>
+                    <td>adgasfhdsfaljgioshgfihsighushng</td>
+                    <td>
+                        <div className="cover-box">0.967</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>adgasfhdsfaljgioshgfihsighushng</td>
+                    <td>
+                        <div className="cover-box">0.967</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>adgasfhdsfaljgioshgfihsighushng</td>
+                    <td>
+                        <div className="cover-box">0.967</div>
+                    </td>
+                </tr>
+            </table>
+        );
     }
 
     return (
@@ -31,39 +72,20 @@ export default function Output() {
                             data-toggle="tooltip" data-placement="bottom" title="Zoom Out"
                         ></i>
                     </div>
-                    <div className="output-left-document">
+                    <div className="output-left-document container">
                     </div>
                 </div>
 
                 <div className="output-right">
                     <div className="title">
-                        <div className="texlines">Raw Textlines</div>
-                        <div className="json">Raw JSON Results</div>
+                        <div className={isTextlines ? "textlines title-active" : "textlines"}
+                            onClick={() => setIsTextlines(true)}
+                        >Raw Textlines</div>
+                        <div className={!isTextlines ? "json title-active" : "json"}
+                            onClick={() => setIsTextlines(false)}
+                        >Raw JSON Results</div>
                     </div>
-                    <table className="table">
-                        <tr className="header">
-                            <th className="text">Text</th>
-                            <th className="confidence">Confidence</th>
-                        </tr>
-                        <tr>
-                            <td>adgasfhdsfaljgioshgfihsighushng</td>
-                            <td>
-                                <div className="cover-box">0967</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>adgasfhdsfaljgioshgfihsighushng</td>
-                            <td>
-                                <div className="cover-box">0967</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>adgasfhdsfaljgioshgfihsighushng</td>
-                            <td>
-                                <div className="cover-box">0967</div>
-                            </td>
-                        </tr>
-                    </table>
+                    {isTextlines ? <RowTextlines /> : <RowJson />}
                 </div>
 
             </div>
