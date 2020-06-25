@@ -1,0 +1,44 @@
+.output-style {
+    width: 80%;
+    height: 600px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    background-color: white;
+}
+
+.output-style h3 {
+    margin-top: 30px;
+}
+
+.content-output {
+    width: 95%;
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+    background-color: white;
+}
+
+.output-left, .output-right {
+    border: 1px solid #79CBCA;
+    flex: 1;
+    height: 300px;
+}
+
+.output-left {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.output-left-top {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+}
