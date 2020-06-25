@@ -81,11 +81,11 @@ export default function Output() {
                             "confidence": 0.985105110407201
                         }
                     ],
-                    rotation_angle: 0.15099197490648789,
-                    height: 2530,
-                    width: 1809,
-                    page_num: 2,
-                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg"
+                    rotation_angle: 0.6729477313724724,
+                    height: 2547,
+                    width: 1832,
+                    page_num: 1,
+                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/0.jpg"
                 },
                 {
                     textlines: [
@@ -132,13 +132,13 @@ export default function Output() {
                             ],
                             text: "O topcv.vn",
                             confidence: 0.9643418775941204
-                        }    
+                        }  
                     ],
-                    rotation_angle: 0.6729477313724724,
-                    height: 2547,
-                    width: 1832,
-                    page_num: 1,
-                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/0.jpg"
+                    rotation_angle: 0.15099197490648789,
+                    height: 2530,
+                    width: 1809,
+                    page_num: 2,
+                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg" 
                 }
             ],
             images: [],
@@ -250,7 +250,13 @@ export default function Output() {
                             data-toggle="tooltip" data-placement="bottom" title="Zoom Out"
                         ></i>
                     </div>
-                    <Stage height={610} width={700 * 595 / 842}>
+                    <Stage height={610} width={700 * 595 / 842}
+                        style={{  
+                            backgroundImage: `url("${`https://d1e7nkzi0xqtmh.cloudfront.net/`+ state.output.pages[indexPage-1].url}")`,
+                            backgroundPosition: 'center',
+                            backgroundSize: 'contain',
+                        }}
+                    >
                         <Layer>
                             {
                                 checked ?
