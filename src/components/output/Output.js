@@ -255,6 +255,7 @@ export default function Output() {
                             backgroundImage: `url("${`https://d1e7nkzi0xqtmh.cloudfront.net/`+ state.output.pages[indexPage-1].url}")`,
                             backgroundPosition: 'center',
                             backgroundSize: 'contain',
+                            backgroundRepeat: 'no-repeat',
                         }}
                     >
                         <Layer>
