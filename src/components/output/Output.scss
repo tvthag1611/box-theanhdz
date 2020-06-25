@@ -1,0 +1,12 @@
+$wd: 700px * 595px / 842px;
+.output-left-document {
+    width: $wd;
+    height: 610px;
+    margin-bottom: 10px;
+}
+
+.output-left {
+    border: 1px solid #79CBCA;
+    flex: 1;
+    height: 700px;
+}

@@ -15,14 +15,14 @@
 }
 
 .btn-grad {
-    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+    background-color: #79CBCA;
     width: 200px;
     margin-top: 30px;
 }
 .btn-grad:hover {
-    background-image: linear-gradient(to right, #77A1D3 5%, #79CBCA 39%, #77A1D3 100%);
-    margin-top: 28px;
     transition: 0.5s ease-in-out;
+    background-color: orange;
+    margin-top: 28px;
 }
 
 .selected-custom {
@@ -47,7 +47,7 @@
 }
 
 .btn-upload {
-    background-color: cornflowerblue;
+    background-color: #79CBCA;
     width: 15vw;
 }
 
