@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './Output.css'
 import './Output.scss';
 import Switch from "react-switch";
 import JSONTreeComponent from "react-json-tree"
 import { Stage, Layer, Rect } from 'react-konva';
+// import useImage from 'use-image';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 
@@ -12,7 +13,6 @@ export default function Output({listData}) {
     const [isTextlines, setIsTextlines] = useState(true);
     const [indexPage, setIndexPage] = useState(1);
     const [state, setState] = useState(listData);
-
     useEffect(() => {
         setState(listData);
     }, [listData])
@@ -121,10 +121,10 @@ export default function Output({listData}) {
                         ></i> */}
                     </div>
                     <div className="output-left-document">
-                        <Stage height={610} width={700 * 595 / 842}
+                        <Stage height={(700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width} width={700 * 595 / 842}
                             style={{  
                                 backgroundImage: `url("${`https://d1e7nkzi0xqtmh.cloudfront.net/`+ state.output.pages[indexPage-1].url}")`,
-                                backgroundPosition: 'center',
+                                backgroundPosition: 'left top',
                                 backgroundSize: 'contain',
                                 backgroundRepeat: 'no-repeat',
                             }}
@@ -133,10 +133,10 @@ export default function Output({listData}) {
                                 {
                                     checked ?
                                     state.output.pages[indexPage-1].textlines.map(textline => {
-                                        let x = textline.polys[0][0]*(700 * 595 / 842)/state.output.pages[indexPage-1].width;
-                                        let y = textline.polys[0][1]*610/state.output.pages[indexPage-1].height;
-                                        let width = textline.polys[1][0] - textline.polys[0][0];
-                                        let height = textline.polys[3][1] - textline.polys[0][1];
+                                        let x = textline.polys[0][0]* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
+                                        let y = textline.polys[0][1]* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
+                                        let width = (textline.polys[1][0] - textline.polys[0][0])* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
+                                        let height = (textline.polys[3][1] - textline.polys[0][1])* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
                                         return (
                                             <Rect
                                                 x={x}
