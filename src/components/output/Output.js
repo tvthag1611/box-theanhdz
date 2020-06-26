@@ -4,6 +4,8 @@ import './Output.scss';
 import Switch from "react-switch";
 import JSONTreeComponent from "react-json-tree"
 import { Stage, Layer, Rect } from 'react-konva';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 export default function Output({listData}) {
     const [checked, setChecked] = useState(true);
@@ -111,12 +113,12 @@ export default function Output({listData}) {
                             }}
                         ></i>
                         <Switch onChange={handleChange} checked={checked}/>
-                        <i className="fa fa-plus" aria-hidden="true"
+                        {/* <i className="fa fa-plus" aria-hidden="true"
                             data-toggle="tooltip" data-placement="bottom" title="Zoom In"
                         ></i>
                         <i className="fa fa-minus" aria-hidden="true"
                             data-toggle="tooltip" data-placement="bottom" title="Zoom Out"
-                        ></i>
+                        ></i> */}
                     </div>
                     <div className="output-left-document">
                         <Stage height={610} width={700 * 595 / 842}
@@ -159,6 +161,19 @@ export default function Output({listData}) {
                         <div className={!isTextlines ? "json title-active" : "json"}
                             onClick={() => setIsTextlines(false)}
                         >Raw JSON Results</div>
+                        {
+                        isTextlines ?
+                            <CopyToClipboard text={
+                                state.output.pages[indexPage-1].textlines.map(textline => {
+                                    return textline.text + '\n';
+                                })
+                            }>
+                                <i className="fa fa-clipboard copy-to-clipboard" aria-hidden="true"
+                                    data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard"
+                                ></i>
+                            </CopyToClipboard>
+                        : null
+                        }
                     </div>
                     {isTextlines ? <RowTextlines /> : <RowJson />}
                 </div>
