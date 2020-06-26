@@ -89,6 +89,38 @@ export default function Output({listData}) {
             )
     }
 
+    const useWindowSize = () => {
+        const isClient = typeof window === 'object';
+      
+        function getSize() {
+          return {
+            width: isClient ? window.innerWidth : undefined,
+            height: isClient ? window.innerHeight : undefined
+          };
+        }
+      
+        const [windowSize, setWindowSize] = useState(getSize);
+      
+        useEffect(() => {
+          if (!isClient) {
+            return false;
+          }
+          
+          function handleResize() {
+            setWindowSize(getSize());
+          }
+      
+          window.addEventListener('resize', handleResize);
+          return () => window.removeEventListener('resize', handleResize);
+        }, []); // Empty array ensures that effect is only run on mount and unmount
+      
+        return windowSize;
+    }
+
+    const size = useWindowSize();
+    const widthWindow = size.width;
+    console.log(widthWindow);
+
     return (
         <div className="container-fluid output-style">
             <h3>OUTPUT</h3>
@@ -121,7 +153,15 @@ export default function Output({listData}) {
                         ></i> */}
                     </div>
                     <div className="output-left-document">
-                        <Stage height={(700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width} width={700 * 595 / 842}
+                        <Stage height={
+                            widthWindow > 600 ?
+                            (700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
+                            widthWindow <= 600 && widthWindow > 435
+                            ? (500 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
+                            (300 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width
+                        }
+                        width={widthWindow > 600 ? 700 * 595 / 842 : widthWindow <= 600 && widthWindow > 435
+                        ? 500 * 595 / 842 : 300 * 595 / 842 }
                             style={{  
                                 backgroundImage: `url("${`https://d1e7nkzi0xqtmh.cloudfront.net/`+ state.output.pages[indexPage-1].url}")`,
                                 backgroundPosition: 'left top',
@@ -133,10 +173,16 @@ export default function Output({listData}) {
                                 {
                                     checked ?
                                     state.output.pages[indexPage-1].textlines.map(textline => {
-                                        let x = textline.polys[0][0]* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
-                                        let y = textline.polys[0][1]* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
-                                        let width = (textline.polys[1][0] - textline.polys[0][0])* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
-                                        let height = (textline.polys[3][1] - textline.polys[0][1])* ((700 * 595 / 842)/state.output.pages[indexPage-1].width);
+                                        const decide =
+                                            widthWindow > 600 ?
+                                            ((700 * 595 / 842)/state.output.pages[indexPage-1].width) :
+                                            widthWindow <= 600 && widthWindow > 435
+                                            ? ((500 * 595 / 842)/state.output.pages[indexPage-1].width) :
+                                            ((300 * 595 / 842)/state.output.pages[indexPage-1].width)
+                                        let x = textline.polys[0][0]* decide;
+                                        let y = textline.polys[0][1]* decide;
+                                        let width = (textline.polys[1][0] - textline.polys[0][0])* decide;
+                                        let height = (textline.polys[3][1] - textline.polys[0][1])* decide;
                                         return (
                                             <Rect
                                                 x={x}
