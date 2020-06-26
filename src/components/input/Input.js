@@ -52,8 +52,10 @@ export default function Input({handleListData}) {
     };
 
     const handleFile = (e) => {
-        document.getElementById("input-text").value = e.target.files[0].name;
-        setDataFile(e.target.files[0]);
+        if (e.target.files[0]) {
+            document.getElementById("input-text").value = e.target.files[0].name;
+            setDataFile(e.target.files[0]);
+        }
     }
 
     const handleSendFile = () => {
