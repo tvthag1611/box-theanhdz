@@ -27,7 +27,7 @@
 }
 
 .selected-custom {
-    width: 100%;
+    flex: 1;
 }
 
 .btn-group {
@@ -56,7 +56,7 @@
 }
 
 .text-input {
-    width: 100%;
+    flex: 1;
     border: none;
 }
 
