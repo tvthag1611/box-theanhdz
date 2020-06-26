@@ -5,150 +5,156 @@ import Switch from "react-switch";
 import JSONTreeComponent from "react-json-tree"
 import { Stage, Layer, Rect } from 'react-konva';
 
-export default function Output() {
+export default function Output({listData}) {
     const [checked, setChecked] = useState(true);
     const [isTextlines, setIsTextlines] = useState(true);
     const [indexPage, setIndexPage] = useState(1);
-    const [state, setState] = useState({
-        output: {
-            pages: [
-                {
-                    textlines: [
-                        {
-                            polys: [
-                                [
-                                    738,
-                                    85
-                                ],
-                                [
-                                    920,
-                                    85
-                                ],
-                                [
-                                    921,
-                                    121
-                                ],
-                                [
-                                    737,
-                                    123
-                                ]
-                            ],
-                            "text": "HỌC VẤN",
-                            "confidence": 0.9711343947963079
-                        },
-                        {
-                            polys: [
-                                [
-                                    1634,
-                                    204
-                                ],
-                                [
-                                    1790,
-                                    206
-                                ],
-                                [
-                                    1790,
-                                    232
-                                ],
-                                [
-                                    1634,
-                                    230
-                                ]
-                            ],
-                            "text": "2014 - 2019",
-                            "confidence": 0.999746721478729
-                        },
-                        {
-                            polys: [
-                                [
-                                    608,
-                                    188
-                                ],
-                                [
-                                    1242,
-                                    195
-                                ],
-                                [
-                                    1242,
-                                    225
-                                ],
-                                [
-                                    608,
-                                    218
-                                ]
-                            ],    
-                            "text": "HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG",
-                            "confidence": 0.985105110407201
-                        }
-                    ],
-                    rotation_angle: 0.6729477313724724,
-                    height: 2547,
-                    width: 1832,
-                    page_num: 1,
-                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/0.jpg"
-                },
-                {
-                    textlines: [
-                        {
-                            polys: [
-                                [
-                                    591,
-                                    891
-                                ],
-                                [
-                                    1373,
-                                    893
-                                ],
-                                [
-                                    1373,
-                                    921
-                                ],
-                                [
-                                    591,
-                                    919
-                                ]
-                            ],
-                            text: "vậnchuyển hàng như grap. Đều được khách hàng đánh giá cao",
-                            confidence: 0.9824769804198147
-                        },
-                        {
-                            polys: [
-                                [
-                                    1623,
-                                    2479
-                                ],
-                                [
-                                    1761,
-                                    2482
-                                ],
-                                [
-                                    1759,
-                                    2504
-                                ],
-                                [
-                                    1623,
-                                    2499
-                                ]
-                            ],
-                            text: "O topcv.vn",
-                            confidence: 0.9643418775941204
-                        }  
-                    ],
-                    rotation_angle: 0.15099197490648789,
-                    height: 2530,
-                    width: 1809,
-                    page_num: 2,
-                    url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg" 
-                }
-            ],
-            images: [],
-            kv: []
-        },
-        time: 15.47,
-        api_version: "0.1",
-        mlchain_version: "0.0.9i0"
-    });
+    // const [state, setState] = useState({
+    //     output: {
+    //         pages: [
+    //             {
+    //                 textlines: [
+    //                     {
+    //                         polys: [
+    //                             [
+    //                                 738,
+    //                                 85
+    //                             ],
+    //                             [
+    //                                 920,
+    //                                 85
+    //                             ],
+    //                             [
+    //                                 921,
+    //                                 121
+    //                             ],
+    //                             [
+    //                                 737,
+    //                                 123
+    //                             ]
+    //                         ],
+    //                         "text": "HỌC VẤN",
+    //                         "confidence": 0.9711343947963079
+    //                     },
+    //                     {
+    //                         polys: [
+    //                             [
+    //                                 1634,
+    //                                 204
+    //                             ],
+    //                             [
+    //                                 1790,
+    //                                 206
+    //                             ],
+    //                             [
+    //                                 1790,
+    //                                 232
+    //                             ],
+    //                             [
+    //                                 1634,
+    //                                 230
+    //                             ]
+    //                         ],
+    //                         "text": "2014 - 2019",
+    //                         "confidence": 0.999746721478729
+    //                     },
+    //                     {
+    //                         polys: [
+    //                             [
+    //                                 608,
+    //                                 188
+    //                             ],
+    //                             [
+    //                                 1242,
+    //                                 195
+    //                             ],
+    //                             [
+    //                                 1242,
+    //                                 225
+    //                             ],
+    //                             [
+    //                                 608,
+    //                                 218
+    //                             ]
+    //                         ],    
+    //                         "text": "HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG",
+    //                         "confidence": 0.985105110407201
+    //                     }
+    //                 ],
+    //                 rotation_angle: 0.6729477313724724,
+    //                 height: 2547,
+    //                 width: 1832,
+    //                 page_num: 1,
+    //                 url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/0.jpg"
+    //             },
+    //             {
+    //                 textlines: [
+    //                     {
+    //                         polys: [
+    //                             [
+    //                                 591,
+    //                                 891
+    //                             ],
+    //                             [
+    //                                 1373,
+    //                                 893
+    //                             ],
+    //                             [
+    //                                 1373,
+    //                                 921
+    //                             ],
+    //                             [
+    //                                 591,
+    //                                 919
+    //                             ]
+    //                         ],
+    //                         text: "vậnchuyển hàng như grap. Đều được khách hàng đánh giá cao",
+    //                         confidence: 0.9824769804198147
+    //                     },
+    //                     {
+    //                         polys: [
+    //                             [
+    //                                 1623,
+    //                                 2479
+    //                             ],
+    //                             [
+    //                                 1761,
+    //                                 2482
+    //                             ],
+    //                             [
+    //                                 1759,
+    //                                 2504
+    //                             ],
+    //                             [
+    //                                 1623,
+    //                                 2499
+    //                             ]
+    //                         ],
+    //                         text: "O topcv.vn",
+    //                         confidence: 0.9643418775941204
+    //                     }  
+    //                 ],
+    //                 rotation_angle: 0.15099197490648789,
+    //                 height: 2530,
+    //                 width: 1809,
+    //                 page_num: 2,
+    //                 url: "3cad5948-aa22-4ab2-a4b0-bf8c35977ec8/1.jpg" 
+    //             }
+    //         ],
+    //         images: [],
+    //         kv: []
+    //     },
+    //     time: 15.47,
+    //     api_version: "0.1",
+    //     mlchain_version: "0.0.9i0"
+    // });
 
+    const [state, setState] = useState({});
+    useEffect(() => {
+        setState(listData);
+    }, [listData])
+    // console.log(state);
+    // console.log(listData);
     const theme = {
         scheme: 'monokai',
         base00: '#272822',

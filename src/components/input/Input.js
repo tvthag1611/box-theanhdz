@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './Input.css'
 import Select from 'react-select';
+import axios from 'axios';
 
 const options = [
     { value: '0', label: 'Vietnamese' },
@@ -42,12 +43,28 @@ const customStyles = {
     }
 }
 
-export default function Input() {
+export default function Input({handleListData}) {
 
     const [selectedOption, setSelectedOption] = useState(null);
+    const [dataFile, setDataFile] = useState();
     const handleChange = selectedOption => {
         setSelectedOption(selectedOption);
     };
+
+    const handleFile = (e) => {
+        document.getElementById("input-text").value = e.target.files[0].name;
+        setDataFile(e.target.files[0]);
+    }
+
+    const handleSendFile = () => {
+        const formData = new FormData();
+        formData.append('input', dataFile);
+        
+        axios.post('http://103.74.122.136:7100/api/ocr', formData)
+             .then(res => handleListData(res.data))
+             .catch(error => console.log(error))
+    }
+
     return (
         <div className="container-fluid input-style">
             <h3>INPUT</h3>
@@ -64,9 +81,7 @@ export default function Input() {
             <div className="btn-group" role="group">
                 <button type="button" className="btn disabled scenario">Input</button>
                 <input type="text" id='input-text' className="form-control text-input" placeholder='Enter ans URL or Upload file...'/>
-                <input type="file" name="" id="file" className="file-input" onChange={(event) => {
-                    document.getElementById("input-text").value = event.target.files[0].name;
-                }}/>
+                <input type="file" name="" id="file" className="file-input" accept=".pdf" onChange={handleFile}/>
                 <button type="button" className="btn btn-upload"
                     onClick={() => {
                         document.getElementById("file").click();
@@ -75,7 +90,7 @@ export default function Input() {
                     Upload File
                 </button>
             </div>
-            <button type="button" name="" id="" className="btn btn-grad">RUN</button>
+            <button type="button" name="" id="" className="btn btn-grad" onClick={ handleSendFile}>RUN</button>
         </div>
     )
 }
