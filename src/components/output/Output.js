@@ -121,6 +121,11 @@ export default function Output({listData}) {
     const widthWindow = size.width;
     console.log(widthWindow);
 
+    let textCopy = '';
+    state.output.pages[indexPage-1].textlines.map(textline => {
+        textCopy += textline.text + '\n';
+    })
+
     return (
         <div className="container-fluid output-style">
             <h3>OUTPUT</h3>
@@ -209,11 +214,7 @@ export default function Output({listData}) {
                         >Raw JSON Results</div>
                         {
                         isTextlines ?
-                            <CopyToClipboard text={
-                                state.output.pages[indexPage-1].textlines.map(textline => {
-                                    return textline.text + '\n';
-                                })
-                            }>
+                            <CopyToClipboard text={textCopy}>
                                 <i className="fa fa-clipboard copy-to-clipboard" aria-hidden="true"
                                     data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard"
                                 ></i>
