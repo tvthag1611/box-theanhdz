@@ -3,10 +3,9 @@ import './Output.css'
 import './Output.scss';
 import Switch from "react-switch";
 import JSONTreeComponent from "react-json-tree"
-import { Stage, Layer, Rect } from 'react-konva';
-// import useImage from 'use-image';
+import { Stage, Layer, Rect, Image, Text } from 'react-konva';
+import useImage from 'use-image';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-
 
 export default function Output({listData}) {
     const [checked, setChecked] = useState(true);
@@ -44,7 +43,11 @@ export default function Output({listData}) {
     const RowJson = () => {
         return (
             <div className="json-content">
-                <button type="button" name="" id="" className="btn btn-json">
+                <button type="button" name="" id="" className="btn btn-json"
+                onClick={() => {
+                    console.log(JSON.stringify(state));
+                }}
+                >
                     <i className="fa fa-download" aria-hidden="true"></i>
                     Download JSON
                 </button>
@@ -119,12 +122,26 @@ export default function Output({listData}) {
 
     const size = useWindowSize();
     const widthWindow = size.width;
-    console.log(widthWindow);
 
     let textCopy = '';
     state.output.pages[indexPage-1].textlines.map(textline => {
         textCopy += textline.text + '\n';
     })
+
+    const ImagePage = () => {
+        const [image] = useImage('https://d1e7nkzi0xqtmh.cloudfront.net/'+ state.output.pages[indexPage-1].url);
+        return <Image image={image}
+            height={
+                widthWindow > 600 ?
+                (700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
+                widthWindow <= 600 && widthWindow > 435
+                ? (500 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
+                (300 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width
+            }
+            width={widthWindow > 600 ? 700 * 595 / 842 : widthWindow <= 600 && widthWindow > 435
+            ? 500 * 595 / 842 : 300 * 595 / 842 }
+        />;
+    };
 
     return (
         <div className="container-fluid output-style">
@@ -158,26 +175,25 @@ export default function Output({listData}) {
                         ></i> */}
                     </div>
                     <div className="output-left-document">
-                        <Stage height={
-                            widthWindow > 600 ?
-                            (700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
-                            widthWindow <= 600 && widthWindow > 435
-                            ? (500 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
-                            (300 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width
-                        }
-                        width={widthWindow > 600 ? 700 * 595 / 842 : widthWindow <= 600 && widthWindow > 435
-                        ? 500 * 595 / 842 : 300 * 595 / 842 }
-                            style={{  
-                                backgroundImage: `url("${`https://d1e7nkzi0xqtmh.cloudfront.net/`+ state.output.pages[indexPage-1].url}")`,
-                                backgroundPosition: 'left top',
-                                backgroundSize: 'contain',
-                                backgroundRepeat: 'no-repeat',
-                            }}
+                        <Stage
+                            height={
+                                widthWindow > 600 ?
+                                610 :
+                                widthWindow <= 600 && widthWindow > 435
+                                ? 410 :
+                                210
+                            }
+                            width={widthWindow > 600 ? 700 * 595 / 842 : widthWindow <= 600 && widthWindow > 435
+                            ? 500 * 595 / 842 : 300 * 595 / 842 }
+                            draggable
                         >
+                            <Layer>
+                                <ImagePage />
+                            </Layer>
                             <Layer>
                                 {
                                     checked ?
-                                    state.output.pages[indexPage-1].textlines.map(textline => {
+                                    state.output.pages[indexPage-1].textlines.map((textline, index) => {
                                         const decide =
                                             widthWindow > 600 ?
                                             ((700 * 595 / 842)/state.output.pages[indexPage-1].width) :
@@ -195,11 +211,14 @@ export default function Output({listData}) {
                                                 width={width}
                                                 height={height}
                                                 stroke="red"
+                                                strokeWidth={1}
+                                                key={index}
                                             />
                                         )
                                     }) : null
                                 }
                             </Layer>
+                                
                         </Stage>
                     </div>
                 </div>
