@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import './Output.css'
 import './Output.scss';
 import Switch from "react-switch";
-import JSONTreeComponent from "react-json-tree"
-import { Stage, Layer, Rect, Image, Text, Shape } from 'react-konva';
-import useImage from 'use-image';
+import { Stage, Layer, Rect, Text, Shape } from 'react-konva';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import RowJson from './components/RowJson'
+import RowTextlines from './components/RowTextlines'
+import ImagePage from './components/ImagePage'
 
 export default function Output({listData}) {
     const [checked, setChecked] = useState(true);
@@ -18,80 +19,8 @@ export default function Output({listData}) {
         setState(listData);
     }, [listData])
 
-    const theme = {
-        scheme: 'monokai',
-        base00: '#272822',
-        base01: '#383830',
-        base02: '#49483e',
-        base03: '#75715e',
-        base04: '#a59f85',
-        base05: '#f8f8f2',
-        base06: '#f5f4f1',
-        base07: '#f9f8f5',
-        base08: '#f92672',
-        base09: '#fd971f',
-        base0A: '#f4bf75',
-        base0B: '#a6e22e',
-        base0C: '#a1efe4',
-        base0D: '#66d9ef',
-        base0E: '#ae81ff',
-        base0F: '#cc6633'
-      };
-
     const handleChange = checked => {
         setChecked(checked);
-    }
-
-    const RowJson = () => {
-        return (
-            <div className="json-content">
-                <button type="button" name="" id="" className="btn btn-json"
-                onClick={() => {
-                    console.log(JSON.stringify(state));
-                }}
-                >
-                    <i className="fa fa-download" aria-hidden="true"></i>
-                    Download JSON
-                </button>
-                <div className="json-data">
-                    <JSONTreeComponent data={state} theme={theme} invertTheme={true}/>
-                </div>
-                
-            </div>
-        );
-    }
-
-    const renderTable = () =>{
-        return state.output.pages[indexPage-1].textlines.map((textline, index) => {
-            const {text, confidence} = textline;
-            return(
-                <tr key={index}>
-                    <td> {text} </td>
-                    <td>
-                        <div className="cover-box">{parseFloat(confidence).toFixed(3)}</div>
-                    </td>
-                </tr>
-            )
-        });
-    }
-
-    const RowTextlines = () => {
-       
-            return(
-            <div className="table-responsive">
-                <table className="table">
-                    <thead>
-                        <tr className="header">
-                            <th className="text">Text</th>
-                            <th className="confidence">Confidence</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderTable()}
-                    </tbody>
-                </table>
-            </div>
-            )
     }
 
     const useWindowSize = () => {
@@ -129,21 +58,6 @@ export default function Output({listData}) {
     state.output.pages[indexPage-1].textlines.map(textline => {
         textCopy += textline.text + '\n';
     })
-
-    const ImagePage = () => {
-        const [image] = useImage('https://d1e7nkzi0xqtmh.cloudfront.net/'+ state.output.pages[indexPage-1].url);
-        return <Image image={image}
-            height={
-                widthWindow > 600 ?
-                (700 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
-                widthWindow <= 600 && widthWindow > 435
-                ? (500 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width :
-                (300 * 595 / 842)*state.output.pages[indexPage-1].height/state.output.pages[indexPage-1].width
-            }
-            width={widthWindow > 600 ? 700 * 595 / 842 : widthWindow <= 600 && widthWindow > 435
-            ? 500 * 595 / 842 : 300 * 595 / 842 }
-        />;
-    };
 
     return (
         <div className="container-fluid output-style">
@@ -190,7 +104,7 @@ export default function Output({listData}) {
                             draggable
                         >
                             <Layer>
-                                <ImagePage />
+                                <ImagePage state={state} widthWindow={widthWindow} indexPage={indexPage}/>
                             </Layer>
                             <Layer>
                                 {
@@ -350,7 +264,7 @@ export default function Output({listData}) {
                         : null
                         }
                     </div>
-                    {isTextlines ? <RowTextlines /> : <RowJson />}
+                    {isTextlines ? <RowTextlines state={state} indexPage={indexPage}/> : <RowJson state={state}/>}
                 </div>
 
             </div>
