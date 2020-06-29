@@ -21,12 +21,21 @@ export default function RowJson({state}) {
         base0E: '#ae81ff',
         base0F: '#cc6633'
     };
+
+    const downloadTxtFile = () => {
+        const element = document.createElement("a");
+        const file = new Blob([JSON.stringify(state)],    
+                    {type: 'data:text/json;charset=utf-8'});
+        element.href = URL.createObjectURL(file);
+        element.download = "Result_RawJson.json";
+        document.body.appendChild(element);
+        element.click();
+    }
+
     return (
         <div className="json-content">
             <button type="button" name="" id="" className="btn btn-json"
-            onClick={() => {
-                console.log(JSON.stringify(state));
-            }}
+            onClick={downloadTxtFile}
             >
                 <i className="fa fa-download" aria-hidden="true"></i>
                 Download JSON
