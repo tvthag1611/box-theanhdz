@@ -9,7 +9,7 @@ import RowTextlines from './components/RowTextlines'
 import ImagePage from './components/ImagePage'
 import SyncLoader from "react-spinners/SyncLoader";
 
-export default function Output({listData}) {
+export default function Output({listData, isLoading}) {
     const [checked, setChecked] = useState(true);
     const [isTextlines, setIsTextlines] = useState(true);
     const [indexPage, setIndexPage] = useState(1);
@@ -17,7 +17,6 @@ export default function Output({listData}) {
     const [visit, setVisit] = useState([]);
     const [stroke, setStroke] = useState([]);
     const [color, setColor] = useState(['green']);
-
     useEffect(() => {
         setState(listData);
     }, [listData])
@@ -309,13 +308,16 @@ export default function Output({listData}) {
                     :
                         <RowJson state={state}/>}
                 </div>
-
-            </div> :
+            </div>
+            :
+            <div>
+                { !isLoading ? <h4>Chưa có input</h4> : null}
                 <SyncLoader
                     size={30}
                     color={"#61cf70"}
-                    loading={true}
+                    loading={isLoading}
                 />
+            </div>
             }
         </div>
     )

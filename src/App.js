@@ -35,15 +35,21 @@ function App() {
   api_version: "",
   mlchain_version: ""
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleListData = (data) => {
       setListData(data);
   }
 
+  const loadingPage = (check) => {
+      setIsLoading(check);
+  }
+
   return (
     <div className="App">
-      <Input handleListData = {handleListData}/>
-      <Output listData = {listData} />
+      <Input handleListData = {handleListData} loadingPage={loadingPage}/>
+      <Output listData = {listData} isLoading={isLoading}/>
     </div>
   );
 }

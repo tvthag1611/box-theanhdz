@@ -43,7 +43,7 @@ const customStyles = {
     }
 }
 
-export default function Input({handleListData}) {
+export default function Input({handleListData, loadingPage}) {
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [dataFile, setDataFile] = useState();
@@ -61,7 +61,7 @@ export default function Input({handleListData}) {
     const handleSendFile = () => {
         const formData = new FormData();
         formData.append('input', dataFile);
-        
+        loadingPage(true);
         axios.post('http://103.74.122.136:7100/api/ocr', formData)
              .then(res => handleListData(res.data))
              .catch(error => console.log(error))
