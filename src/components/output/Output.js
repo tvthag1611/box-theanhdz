@@ -7,6 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import RowJson from './components/RowJson'
 import RowTextlines from './components/RowTextlines'
 import ImagePage from './components/ImagePage'
+import SyncLoader from "react-spinners/SyncLoader";
 
 export default function Output({listData}) {
     const [checked, setChecked] = useState(true);
@@ -14,6 +15,8 @@ export default function Output({listData}) {
     const [indexPage, setIndexPage] = useState(1);
     const [state, setState] = useState(listData);
     const [visit, setVisit] = useState([]);
+    const [stroke, setStroke] = useState([]);
+    const [color, setColor] = useState(['green']);
 
     useEffect(() => {
         setState(listData);
@@ -59,9 +62,37 @@ export default function Output({listData}) {
         textCopy += textline.text + '\n';
     })
 
+    const getTextWidth = (s, size) => {
+        const text = document.createElement("span"); 
+        document.body.appendChild(text); 
+        text.style.font = "times new roman"; 
+        text.style.fontSize = size + "px"; 
+        text.style.height = 'auto'; 
+        text.style.width = 'auto'; 
+        text.style.position = 'absolute'; 
+        text.style.whiteSpace = 'no-wrap'; 
+        text.innerHTML = s;
+        const width = Math.ceil(text.clientWidth);
+        document.body.removeChild(text);
+        return width;
+    }
+
+    const setHoverText = (index) => {
+        if (index !== null) {
+            color[index] = 'green'
+            for (let i=0; i<color.length; i++) {
+                if (i !== index) {
+                    color[i] = 'red';
+                }
+            }
+            setColor([...color]);
+        }
+    }
+
     return (
         <div className="container-fluid output-style">
-            <h3>OUTPUT</h3>
+            <h3 style={state.time === null ? {marginBottom: 100} : null}>OUTPUT</h3>
+            { state.time !== null ?
             <div className="content-output">
                 <div className="output-left">
                     <div className="output-left-top">
@@ -91,6 +122,7 @@ export default function Output({listData}) {
                         ></i> */}
                     </div>
                     <div className="output-left-document">
+                        {/* { state.output.pages[0]. */}
                         <Stage
                             height={
                                 widthWindow > 600 ?
@@ -122,10 +154,14 @@ export default function Output({listData}) {
                                         let height = (textline.polys[3][1] - textline.polys[0][1])* decide;
                                         const handleVisitFalse = () => {
                                             visit[index] = false;
+                                            stroke[index] = 1;
+                                            setStroke([...stroke]);
                                             setVisit([...visit]);
                                         }
                                         const handleVisitTrue = () => {
                                             visit[index] = true;
+                                            stroke[index] = 2;
+                                            setStroke([...stroke]);
                                             setVisit([...visit]);
                                         }
                                         return (
@@ -134,8 +170,8 @@ export default function Output({listData}) {
                                                 y={y}
                                                 width={width}
                                                 height={height}
-                                                stroke="red"
-                                                strokeWidth={1}
+                                                stroke={color[index] === undefined || color[index]==='red' ? 'red' : 'green'}
+                                                strokeWidth={stroke[index] === undefined || stroke[index]===1 ? 1 : 2}
                                                 key={index}
                                                 onMouseMove={handleVisitTrue}
                                                 onMouseOut={handleVisitFalse}
@@ -158,7 +194,7 @@ export default function Output({listData}) {
                                         let y = textline.polys[0][1]* decide;
                                         let widthBox = (textline.polys[1][0] - textline.polys[0][0])* decide;
                                         let heightBox = (textline.polys[3][1] - textline.polys[0][1])* decide;
-                                        let width = widthBox*13/heightBox;
+                                        let width = getTextWidth(textline.text, 12) + 8;
                                         let height = 20;
                                         let tmp = (width-widthBox)/2;
                                         return (
@@ -215,7 +251,7 @@ export default function Output({listData}) {
                                         let y = textline.polys[0][1]* decide;
                                         let widthBox = (textline.polys[1][0] - textline.polys[0][0])* decide;
                                         let heightBox = (textline.polys[3][1] - textline.polys[0][1])* decide;
-                                        let width = widthBox*13/heightBox;
+                                        let width = getTextWidth(textline.text, 12) + 8;
                                         let height = 20;
                                         let tmp = (width-widthBox)/2;
                                         return (
@@ -264,10 +300,23 @@ export default function Output({listData}) {
                         : null
                         }
                     </div>
-                    {isTextlines ? <RowTextlines state={state} indexPage={indexPage}/> : <RowJson state={state}/>}
+                    {isTextlines ?
+                        <RowTextlines
+                            state={state}
+                            indexPage={indexPage}
+                            setHoverText = {setHoverText}
+                        />
+                    :
+                        <RowJson state={state}/>}
                 </div>
 
-            </div>
+            </div> :
+                <SyncLoader
+                    size={30}
+                    color={"#61cf70"}
+                    loading={true}
+                />
+            }
         </div>
     )
 }

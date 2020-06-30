@@ -1,6 +1,6 @@
 .output-style {
     width: 80%;
-    height: auto;
+    min-height: 330px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
